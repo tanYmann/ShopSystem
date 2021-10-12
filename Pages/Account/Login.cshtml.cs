@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -47,15 +48,56 @@ namespace ShopSystem.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
-            if(ModelState.IsValid)
+            
+            if (ModelState.IsValid)
             {
-                var user = Db.           }
-        }
-       /* public async Task<IActionResult> OnPostAsync(Customer user)
-        {
+                var idAddress = await  Db.Addresses.FindAsync(Input.CustomerNo);
+                var user = Db.Customers.Where(c => c.Password == Input.Password && c.Id == idAddress.Id);
+                
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Ungültiger Nutzername oder Kennwort.");
+                    return Page();
+                }
+                
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, idAddress.Id.ToString()),
+                    new Claim(ClaimTypes.Name,idAddress.CustomerNo.ToString()),
 
+                };
+
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                                principal,
+                                                new AuthenticationProperties { IsPersistent = true });
+
+                   
+               
+
+                return LocalRedirect(returnUrl);
+            }
+            return Page();
         }
-       */
+      
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

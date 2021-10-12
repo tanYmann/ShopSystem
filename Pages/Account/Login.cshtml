@@ -1,20 +1,42 @@
 ﻿@page
 @model ShopSystem.Pages.Account.LoginModel
 @{
-
+    ViewData["Title"] = "Login";
 }
+<header>
+    <h1>@ViewData["Title"]</h1>
+</header>
 <div class="text-center">
-    <ul class="form-group">
-        <li>
-            <label asp-for="Input.CustomerNo"></label>
-            <input asp-for="Input.CustomerNo" asp-area="" asp-page="/Account/Index" />
-        </li>
-        <li>
-            <label asp-for="Input.Password"></label>
-            <input asp-for="Input.Password" />
-        </li>
-        <li>
-            <button type="submit" class="btn btn-primary">Log in</button>
-        </li>
-    </ul>
+    <section>
+        <form id="account" method="post">
+            <div asp-validation-summary="All" class="text-danger">
+                <div class="form-group">
+                    <ul>
+                        <li>
+                            <div class="form-group">
+                                <label asp-for="Input.CustomerNo">Kundennummer</label>
+                                <input asp-for="Input.CustomerNo" class="form-control" />
+                                <span asp-validation-for="Input.CustomerNo" class="text-danger"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <label asp-for="Input.Password">Password</label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Log in</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </section>
 </div>
+@section Scripts{
+<partial name="_ValidationScriptsPartial"/>
+}
