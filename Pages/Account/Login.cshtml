@@ -1,0 +1,20 @@
+﻿@page
+@model ShopSystem.Pages.Account.LoginModel
+@{
+
+}
+<div class="text-center">
+    <ul class="form-group">
+        <li>
+            <label asp-for="Input.CustomerNo"></label>
+            <input asp-for="Input.CustomerNo" asp-area="" asp-page="/Account/Index" />
+        </li>
+        <li>
+            <label asp-for="Input.Password"></label>
+            <input asp-for="Input.Password" />
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </li>
+    </ul>
+</div>
