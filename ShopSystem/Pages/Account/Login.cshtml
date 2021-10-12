@@ -1,8 +1,11 @@
 ﻿@page
 @model ShopSystem.Pages.Account.LoginModel
 @{
-
+    ViewData["Title"] = "Login";
 }
+<header>
+    <h1>@ViewData["Title"]</h1>
+</header>
 <div class="text-center">
     <section>
         <form id="account" method="post">
@@ -11,14 +14,14 @@
                     <ul>
                         <li>
                             <div class="form-group">
-                                <label asp-for="Input.CustomerNo"></label>
+                                <label asp-for="Input.CustomerNo">Kundennummer</label>
                                 <input asp-for="Input.CustomerNo" class="form-control" />
                                 <span asp-validation-for="Input.CustomerNo" class="text-danger"></span>
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <label asp-for="Input.Password"></label>
+                                <label asp-for="Input.Password">Password</label>
                                 <input asp-for="Input.Password" class="form-control" />
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
@@ -34,3 +37,6 @@
         </form>
     </section>
 </div>
+@section Scripts{
+<partial name="_ValidationScriptsPartial"/>
+}

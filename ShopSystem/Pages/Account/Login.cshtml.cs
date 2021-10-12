@@ -48,21 +48,23 @@ namespace ShopSystem.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
-            if(ModelState.IsValid)
+            
+            if (ModelState.IsValid)
             {
-                var user = await Db.Addresses.FindAsync(Input.CustomerNo);
+                var idAddress = await  Db.Addresses.FindAsync(Input.CustomerNo);
+                var user = Db.Customers.Where(c => c.Password == Input.Password && c.Id == idAddress.Id);
                 
                 if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Ungültiger Nutzername oder Kennwort.");
                     return Page();
                 }
-
+                
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
-                    new Claim(ClaimTypes.Name,user.CustomerNo.ToString()) 
+                    new Claim(ClaimTypes.NameIdentifier, idAddress.Id.ToString()),
+                    new Claim(ClaimTypes.Name,idAddress.CustomerNo.ToString()),
+
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -72,6 +74,9 @@ namespace ShopSystem.Pages.Account
                                                 principal,
                                                 new AuthenticationProperties { IsPersistent = true });
 
+                   
+               
+
                 return LocalRedirect(returnUrl);
             }
             return Page();
@@ -79,3 +84,20 @@ namespace ShopSystem.Pages.Account
       
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

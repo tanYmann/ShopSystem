@@ -19,15 +19,13 @@ namespace ShopSystem.Models
         public string Password { get; set; }       
         [Column("AddressId")]
         public int AddressId { get; }
-        [ForeignKey("AddressId")]
-        public virtual Address Addresses { get; set; }
         [Column("Options")]
         public int Options { get; set; }
         [Column("Gln")]
         public string Gln { get; set; }
         [Column("GrpStat5")]
         public string GrpStat5 { get; set; }
-       
+        
 
     }
 }
