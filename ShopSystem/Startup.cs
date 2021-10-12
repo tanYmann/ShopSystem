@@ -29,11 +29,11 @@ namespace ShopSystem
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddDbContext<AppDbContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+              options.UseSqlServer(Configuration.GetConnectionString("HomeConnectionBOH")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie("Cookies",options =>
-            {   options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-                options.AccessDeniedPath = "/Account/AccessDenied";
+            {   options.LoginPath = "/Pages/Account/Login";
+                options.LogoutPath = "/Pages/Account/Logout";
+                options.AccessDeniedPath = "/Pages/Account/AccessDenied";
                 options.ReturnUrlParameter = "ReturnUrl";
 
             }
@@ -63,8 +63,9 @@ namespace ShopSystem
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                        name: "default",
+                        pattern: "{controller=Home}/{Action=Index}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

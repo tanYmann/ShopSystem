@@ -51,8 +51,8 @@ namespace ShopSystem.Pages.Account
             
             if (ModelState.IsValid)
             {
-                var idAddress = await  Db.Addresses.FindAsync(Input.CustomerNo);
-                var user = Db.Customers.Where(c => c.Password == Input.Password && c.Id == idAddress.Id);
+                var idAddress =  Db.Addresses.FindAsync(Input.CustomerNo).Result;
+                var user = Db.Customers.Where(c => c.Password == Input.Password && c.AddressId == idAddress.Id).FirstOrDefault();
                 
                 if (user == null)
                 {
